@@ -14,8 +14,13 @@ Kubernetes v1.23.5 bootstraping by vagrant and kubeadm
 2. Node Spec
     - Node Networking:
         - VBOX Bridge Mode
-            - Host PC의 네트워크 장치와 bridge 모드 구성 (마치 호스트 머신처럼 wifi 공유기의 DHCP 서버에서 사설 IP를 할당받습니다.)
-                ![vbox-bridge](img/vbox-bridge.png)
+        
+            Host의 네트워크 장치와 bridge 모드 구성 (마치 호스트 머신처럼 wifi 공유기의 DHCP 서버에서 사설 IP를 할당받습니다.)
+            
+            >iptime 관리자 화면에서 보면 가상머신이 호스트와 동일한 IP대역을 할당받은걸 확인할 수 있습니다.
+                
+            ![vbox-bridge](img/vbox-bridge.png)
+
     - Master Node(ControlPlane): 
         - centos 7.9.2009 (core) (generic/centos 7) 
         - Kernel: Linux 3.10.0-1160.59.1.el7.x86_64
