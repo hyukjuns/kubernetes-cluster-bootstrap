@@ -1,4 +1,4 @@
-# vagrant-k8s-cluster-bootstrap
+# kubernetes-cluster-bootstrap
 >Kubernetes 공식 문서를 기반으로 진행하였으며, 진행중 겪은 에러를 기반으로 동일한 에러를 다시 겪지 않도록 설정 내용을 수정하며 작성하였습니다.
 
 Vagrant를 사용해 Kubernetes의 노드를 생성하고, kubeadm을 사용해 Kubernetes Cluster((v1.23.5)를 Bootstrap 하는 Hands-On Tutorial 입니다.
