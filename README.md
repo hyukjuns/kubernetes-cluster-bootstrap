@@ -3,7 +3,9 @@
 ## To Make Cluster Info
 - 1 Master Node
 - 2 Worker Node
-- Calico Network Plugin
+- Container Network Interface: Calico
+- Container Runtime Interface: Containrd
+- Container Storage Interface: ???
 - Addons -> Prometheus Stack, Ingress Nginx Controller
 
 ## Environments & Prerequisite
