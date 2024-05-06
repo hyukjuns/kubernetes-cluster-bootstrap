@@ -1,5 +1,8 @@
 # Kubernetes Install by Vagrant and Kubeadm
 
+## vagrant command
+- vagrant up / destroy / halt
+
 ## To Make Cluster Info
 - 1 Master Node
 - 2 Worker Node
@@ -24,6 +27,23 @@
 
 
 ## Manual Install Step
+사전 준비
+1. hostname, mac 주소, nic id 고유한지 확인
+2. UFW 방화벽 OFF
+3. SELINUX OFF
+4. SWAP OFF
+설치
+1. Container Runtime 설치 - containerd
+2. cgroup driver를 systemd 로 변경
+3. kubeadm 설치
+4. cni 설치
+5. kubeadm 으로 클러스터 설치
+
+### 설치문서
+https://kubernetes.io/ko/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+
+### 컨테이너 런타임
+https://kubernetes.io/ko/docs/setup/production-environment/container-runtimes/
 
 ## Auto Install Scripts
 
