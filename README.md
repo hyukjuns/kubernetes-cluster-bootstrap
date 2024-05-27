@@ -169,7 +169,9 @@
     -> containerd의 버전은 v2.0.0 으로 조건 충족
 
     kubelet and container runtime are configured to use the systemd cgroup driver
-    -> 설치 과정에서 kubelet과 container runtime의 cgroup dirver를 systemd로 맞춰줄 예정이다.
+    -> 설치 과정에서 container runtime의 cgroup dirver를 systemd로 맞춰줄 예정이다. kubelet은 v1.22 or later 부터 cgroupdriver가 기본적으로 systemd 이다.
+    *kubelet의 cgroup driver를 명시적으로 선언하는 방법은 다음 링크 참고
+    https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
     ```
 
     ```bash
@@ -191,16 +193,37 @@
 3. kubeadm / kubelet / kubectl 설치
 
     https://kubernetes.io/ko/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+    
+    ```
+    # Debian based distro
+    sudo apt-get update
+    # apt-transport-https may be a dummy package; if so, you can skip that package
+    sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
-4. kubelet의 cgroup driver를 systemd로 변경
+    # If the directory `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
+    # sudo mkdir -p -m 755 /etc/apt/keyrings
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    Note:
 
-    https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
+    # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
-5. kubeadm 으로 클러스터 부트스트랩
+    #Install
+    sudo apt-get update
+    sudo apt-get install -y kubelet kubeadm kubectl
+    sudo apt-mark hold kubelet kubeadm kubectl
+
+    #Enable kubelet
+    sudo systemctl enable --now kubelet
+
+    ```
+    *kubelet의 cgroup driver를 systemd로 변경할 필요 없음, kubelet의 default cgroup driver는 systemd 이다 (v1.22 or later)
+
+4. kubeadm 으로 클러스터 부트스트랩
 
     https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
 
-6. CNI Add on 설치
+5. CNI Add on 설치
 
     **CNI 이해하기**
 
@@ -214,6 +237,9 @@
 
 ## Ref
 
+k8s는 영어로 된 문서를 읽어야 최신 버전의 문서를 볼 수 있다.
+
+한글 번역이 속도를 맞추기 어렵기 때문
 ### 설치 문서 순서
 1. 시작: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 2. CRI 설치: https://kubernetes.io/docs/setup/production-environment/container-runtimes/
