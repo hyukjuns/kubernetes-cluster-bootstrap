@@ -39,12 +39,19 @@ sudo cat /sys/class/dmi/id/product_uuid
 # 설치 순서
 
 ## 1. UFW 방화벽 OFF
+테스트 환경이므로 방화벽 Off 
+
+> 온프레미스 방화벽, 클라우드 방화벽, OS 방화벽 등이 존재하는 환경이라면 아래 공식 문서 참고하여 포트 개방하여 진행
+
+[공식문서 - Ports and Protocols](https://kubernetes.io/docs/reference/networking/ports-and-protocols/)
 
 ```bash
 sudo ufw disable
 ```
 
 ## 2. SWAP 메모리 해제
+
+컨테이너 구동이 주 목적인 호스트 노드 이므로, 시스템에 메모리가 부족할 경우 일반적인 스왑 메모리를 사용하는 것보다 컨테이너를 빠르게 재시작 하는것이 효율적이다.
 
 ```bash
 sudo swapoff -a
@@ -119,9 +126,9 @@ sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.5.0.tgz
 ```
 
 ## 4. 컨테이너 런타임(containerd)의 cgroup driver를 systemd 로 변경
-설치 과정에서 container runtime의 cgroup dirver를 systemd로 맞춰줄 예정이다. kubelet은 v1.22 or later 부터 cgroupdriver가 기본적으로 systemd 이다.
+>설치 과정에서 container runtime의 cgroup dirver를 systemd로 맞춰줄 예정이다. kubelet은 v1.22 or later 부터 cgroupdriver가 기본적으로 systemd 이다.
 
-> cgroup 이해
+> cgroup 이해: 
 cgroup: 프로세스에게 할당하는 리소스를 제한함 (cpu/mem/disk/net) 
 시스템의 안정성을 위해 host node / kubelet / container runtime 모두 같은 cgroup 드라이버를 사용해야함
 host <-> kubelet/cri의 cgroup 드라이버가 다르다면, 시스템에는 2개의 cgroup 관리자가 있는 것이기 때문에, cgorup을 사용한 자원 관리에 혼동이 발생할 수 있고, 이로인해 시스템에 자원 압박이 발생할 위험이 존재한다.
@@ -155,8 +162,8 @@ sudo systemctl restart containerd
 
 ## 5. kubeadm / kubelet / kubectl 설치
 
-https://kubernetes.io/ko/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
-
+[공식문서](
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl)
 ```
 # Debian based distro
 sudo apt-get update
