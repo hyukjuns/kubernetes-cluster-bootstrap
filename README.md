@@ -223,9 +223,13 @@ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outfor
 ```
 
 ## 7. CNI Add-On 설치 (Weave)
->CNI 이해하기
-containerd 설치할때 함께 설치하는 cni plugin과 weave, calico 같은 cni는 무슨 관계인지?
-kubelet이 관리할 시절에는 /opt/cni/bin (바이너리 경로), /etc/cni/net.d/ (설정 경로)를 통해서 cni관리를 했고, (kubelet option --cni-bin-dir 통해서) 특정 버전 이후부터 그 방식이 아닌지?
+
+> CNI 플러그인
+CNI 플러그인은 Overlay Network 플러그인과 같으며, Overlay Network는 서로 다른 노드에서 실행되고 있는 Pod들 간에 네트워크 통신을 가능하게 한다.
+Overlay Network는 가상 네트워크 인터페이스를 Pod에서 사용하게 함으로써, Pod에서 시작된 패킷을 캡슐화하여 네트워크 통신을 가능하게 한다.
+
+> k8s v.124 이전 버전엥서는 kubelet이 CNI를 관리함, /opt/cni/bin (바이너리 경로), /etc/cni/net.d/ (설정 경로), kubelet option --cni-bin-dir 통해 확인
+Prior to Kubernetes 1.24, the CNI plugins could also be managed by the kubelet using the cni-bin-dir and network-plugin command-line parameters. These command-line parameters were removed in Kubernetes 1.24, with management of the CNI no longer in scope for kubelet.
 
 [공식문서](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network)
 
